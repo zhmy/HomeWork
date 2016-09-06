@@ -1,0 +1,103 @@
+/**
+ * ！！警告：严禁擅自修改该配置，如果有本地调试需求
+ * 请在本地新建/buildsystem/config.local.gradle
+ * 进行覆盖
+ */
+
+
+ext {
+
+    /**
+     * app相关配置
+     */
+    app = [
+            androidApplicationId     : "com.zmy.gradledemo",
+            androidVersionCode       : 2,
+            androidVersionName       : "1.0.1"
+    ]
+
+    /**
+     * 线上包
+     */
+    release = [
+            BASE_URL           : "http://c.tieba.baidu.com/",
+            SAPI_DOMAIN        : "Online",
+            WX_APP_ID          : "wxa5179b1dbce2c71a",
+            BUGTAG             : "false",
+            Stetho             : "false",
+            LeakCanary         : "false",
+            applicationIdSuffix: "",
+            versionNameSuffix  : "",
+            CrabSDK            : "true",
+            appName            : "百度玩嗨",
+            LogPrint           : "false",
+            PUSH_API_KEY       : "aLWOHGvi70De1dDXEz0Hi7b9",
+            MTJ_KEY            : "f649404df3"
+    ]
+
+    /**
+     * 测试包
+     */
+    test = [
+            BASE_URL           : "http://c.tieba.baidu.com/",
+            SAPI_DOMAIN        : "Online",
+            WX_APP_ID          : "wxa5179b1dbce2c71a",
+            BUGTAG             : "true",
+            LeakCanary         : "true",
+            Stetho             : "true",
+            CrabSDK            : "true",
+            applicationIdSuffix: "",
+            versionNameSuffix  : "",
+            appName            : "百度玩嗨-测试包",
+            LogPrint           : "true",
+            PUSH_API_KEY       : "aLWOHGvi70De1dDXEz0Hi7b9",
+            MTJ_KEY            : "3774e5adba"
+    ]
+
+    /**
+     * 本地测试包
+     */
+    debug = [
+            BASE_URL           : "http://cq01-sy-business-frontend19.epc.baidu.com:8080/",
+            SAPI_DOMAIN        : "QA",
+            WX_APP_ID          : "wx505f976683262a64",
+            BUGTAG             : "false",
+            LeakCanary         : "true",
+            applicationIdSuffix: ".debug",
+            Stetho             : "true",
+            versionNameSuffix  : "-debug",
+            appName            : "百度玩嗨-本地包",
+            CrabSDK            : "false",
+            LogPrint           : "true",
+            PUSH_API_KEY       : "aLWOHGvi70De1dDXEz0Hi7b9",
+            MTJ_KEY            : "3774e5adba"
+    ]
+
+    bugtags = [
+            //自动上传符号表功能配置
+            appKey                : "2135467a5fdaaed2bb3c6f3ffc904aca", //这里是你的 appKey
+            appSecret             : "45156f56a64040cfaeaa7794cbc8866f",    //这里是你的 appSecret，管理员在设置页可以查看
+            mappingUploadEnabled  : true,
+
+            //网络跟踪功能配置(企业版)
+            trackingNetworkEnabled: true,
+    ]
+
+    SAPI = [
+            TPL          : "tieba",
+            APP_ID       : "1",
+            APP_SIGN_KEY : "t7l3i37rugolkdkg3nzrfc2mvwaz16rl",
+            FACE_APP_NAME: "tieba"
+    ]
+
+
+
+    common = [
+            CREASH_APPKEY    : "fb8290f199b7d9e5",
+            BDLOCATION_APPKEY: "nUFBc9Gnufmsfcx2kmmDgrjm"
+    ]
+
+
+}
+
+
