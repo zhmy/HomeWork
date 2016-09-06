@@ -12,8 +12,8 @@ ext {
      */
     app = [
             androidApplicationId     : "com.zmy.gradledemo",
-            androidVersionCode       : 2,
-            androidVersionName       : "1.0.1"
+            androidVersionCode       : 1,
+            androidVersionName       : "1.0.0"
     ]
 
     /**
@@ -72,31 +72,6 @@ ext {
             PUSH_API_KEY       : "aLWOHGvi70De1dDXEz0Hi7b9",
             MTJ_KEY            : "3774e5adba"
     ]
-
-    bugtags = [
-            //自动上传符号表功能配置
-            appKey                : "2135467a5fdaaed2bb3c6f3ffc904aca", //这里是你的 appKey
-            appSecret             : "45156f56a64040cfaeaa7794cbc8866f",    //这里是你的 appSecret，管理员在设置页可以查看
-            mappingUploadEnabled  : true,
-
-            //网络跟踪功能配置(企业版)
-            trackingNetworkEnabled: true,
-    ]
-
-    SAPI = [
-            TPL          : "tieba",
-            APP_ID       : "1",
-            APP_SIGN_KEY : "t7l3i37rugolkdkg3nzrfc2mvwaz16rl",
-            FACE_APP_NAME: "tieba"
-    ]
-
-
-
-    common = [
-            CREASH_APPKEY    : "fb8290f199b7d9e5",
-            BDLOCATION_APPKEY: "nUFBc9Gnufmsfcx2kmmDgrjm"
-    ]
-
 
 }
 

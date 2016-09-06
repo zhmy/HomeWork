@@ -11,9 +11,30 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
+    signingConfigs {
+        debug {
+            storeFile file('../buildsystem/wefan.keystore')
+            storePassword 'wefan@baidu.com'
+            keyAlias 'wefan'
+            keyPassword 'wefan@baidu.com'
+        }
         release {
-            minifyEnabled false
+            storeFile file('../buildsystem/wefan.keystore')
+            storePassword 'wefan@baidu.com'
+            keyAlias 'wefan'
+            keyPassword 'wefan@baidu.com'
+        }
+    }
+    buildTypes {
+        debug {
+            buildConfigField("String", "API_URL", "\"debug\"")
+//            applicationIdSuffix '.debug'
+        }
+        release {
+            buildConfigField("String", "API_URL", "\"release\"")
+            minifyEnabled true
+            shrinkResources true
+//            signingConfig signingConfigs.re
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -28,4 +49,60 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
+    compile project(':library')
 }
+
+//android.applicationVariants.all { variant ->
+//    def buildType = variant.buildType
+//    def encoding = java.nio.charset.Charset.defaultCharset().toString()
+//    if (buildType.applicationIdSuffix) {
+//        def defaultPackageId = variant.packageName.replaceAll(buildType.applicationIdSuffix,'')
+//        variant.mergeResources.doLast {
+//            def f = file("${buildDir}/intermediates/res/${variant.dirName}/values/values.xml")
+//            String content = f.getText(encoding)
+//            content = content.replaceAll('GradleDemo','GradleDemoBeta')
+//            f.write(content,encoding)
+//        }
+//    }
+//}
+
+class TimingsListener implements TaskExecutionListener, BuildListener {
+    private Clock clock
+    private timings = []
+
+    @Override
+    void beforeExecute(Task task) {
+        clock = new org.gradle.util.Clock()
+    }
+
+    @Override
+    void afterExecute(Task task, TaskState taskState) {
+        def ms = clock.timeInMs
+        timings.add([ms, task.path])
+        task.project.logger.warn "${task.path} took ${ms}ms"
+    }
+
+    @Override
+    void buildFinished(BuildResult result) {
+        println "Task timings:"
+        for (timing in timings) {
+            if (timing[0] >= 50) {
+                printf "%7sms  %s\n", timing
+            }
+        }
+    }
+
+    @Override
+    void buildStarted(Gradle gradle) {}
+
+    @Override
+    void projectsEvaluated(Gradle gradle) {}
+
+    @Override
+    void projectsLoaded(Gradle gradle) {}
+
+    @Override
+    void settingsEvaluated(Settings settings) {}
+}
+
+gradle.addListener new TimingsListener()
