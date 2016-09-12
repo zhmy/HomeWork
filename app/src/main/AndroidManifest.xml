@@ -30,6 +30,7 @@
             <!--android:name="com.zmy.library.MainSharedPrefProvider"-->
             <!--android:authorities="com.zmy.library.debug.MainSharedPrefProvider"-->
             <!--android:exported="false" />-->
+        <meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL}" />
     </application>
 
 </manifest>

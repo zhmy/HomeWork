@@ -13,6 +13,12 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+
+
+//使得gradle不会把你的代码中的中文注释搞乱
+//特别注意  参数是JavaCompile 而不是Compile 很多老版本的gradle和android studio 的教程里面用的都是没有加java的  坑爹啊！
+
+    tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
 }
 
 allprojects {
@@ -24,3 +30,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+tasks.whenTaskAdded { task ->
+    if (task.name.contains('Androidtest')) {
+        task.enabled false
+    }
+}
+

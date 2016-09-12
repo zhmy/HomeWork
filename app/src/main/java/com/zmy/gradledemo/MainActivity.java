@@ -1,8 +1,11 @@
 package com.zmy.gradledemo;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,12 +15,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.zmy.library.BdListView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView api_url;
+    private ListView listview;
+    String[] strs = new String[] {
+            "first", "second", "third", "fourth", "fifth"
+    };
+
+    private SwipeRefreshLayout swipeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +41,36 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         api_url = (TextView) findViewById(R.id.api_url);
         api_url.setText(BuildConfig.API_URL);
+
+        listview = (BdListView) findViewById(R.id.listview);
+
+        TextView headerView = (TextView) LayoutInflater.from(this).inflate(R.layout.list_item, null);
+        TextView headerView2 = (TextView) LayoutInflater.from(this).inflate(R.layout.list_item, null);
+        headerView.setText("header header");
+        headerView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(MainActivity.this, "长按header", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        headerView2.setText("sssssssss");
+        listview.addHeaderView(headerView);
+        listview.addHeaderView(headerView2);
+        listview.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.list_item, strs));
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

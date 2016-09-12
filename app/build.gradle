@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        manifestPlaceholders = [ activityLabel:"defaultName"]
     }
     signingConfigs {
         debug {
@@ -34,13 +36,34 @@ android {
             buildConfigField("String", "API_URL", "\"release\"")
             minifyEnabled true
             shrinkResources true
-//            signingConfig signingConfigs.re
+//            signingConfig signingConfigs.release gradle v-2.2.1
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    productFlavors {
+//渠道一的配置
+        channelname1 {
+//把manifest中的“CHANNEL”变量名（key）的变量值（value）替换成xxx1
+//这里也可以把“"xxx1"” 换成name=> [CHANNEL:name]  这个的意思就是把value换成 channelname1
+//由于网上的乱七八糟的粘贴复制 所有网上的那些根本没说清楚，这里的CHANNEL必须要再manifest中有且对应 具体我写在下面代码块
+            manifestPlaceholders = [CHANNEL: "xxx1"]
+        }
+//渠道二的配置
+        channelname2 {
+            manifestPlaceholders = [CHANNEL: "xxx2"]
+        }
+
+//        channelname1{ }
+//        channelname2{ }
+////执行all方法，循环把 channelname*赋值给manifest中的变量
+//        all { flavor ->
+//            flavor.manifestPlaceholders = [CHANNEL:name ]
+//        }
     }
 }
 
