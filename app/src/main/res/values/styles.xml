@@ -17,4 +17,46 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Theme_Person_Activity" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
+    <style name="Theme_Person_Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/person_card_Anim</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:windowIsFloating">true</item>
+
+    </style>
+
+    <style name="Theme_Report_Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:windowAnimationStyle">@style/report_dialog_Anim</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="person_activity_Anim" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/alpha_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
+        <!--<item name="android:windowEnterAnimation">@anim/alpha_in</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/alpha_out</item>-->
+    </style>
+
+    <style name="person_card_Anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/push_up_in_overshoot</item>
+        <item name="android:windowExitAnimation">@anim/push_up_out</item>
+    </style>
+
+    <style name="report_dialog_Anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+        <item name="android:windowExitAnimation">@anim/push_up_out</item>
+    </style>
 </resources>

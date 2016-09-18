@@ -1,0 +1,23 @@
+ext {
+
+    /**
+     * app相关配置
+     */
+    app = [
+            applicationId: "com.zmy.gradledemo",
+    ]
+
+    release = [
+            appName: "G_release",
+    ]
+
+    zmy = [
+            appName: "G_zmy",
+    ]
+
+    debug = [
+            appName: "G_debug",
+    ]
+}
+
+

@@ -5,21 +5,14 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.zmy.gradledemo"
+        applicationId rootProject.ext.app.applicationId
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
-        manifestPlaceholders = [ activityLabel:"defaultName"]
+//        manifestPlaceholders = [ activityLabel:"defaultName"]
     }
     signingConfigs {
-        debug {
-            storeFile file('../buildsystem/wefan.keystore')
-            storePassword 'wefan@baidu.com'
-            keyAlias 'wefan'
-            keyPassword 'wefan@baidu.com'
-        }
         release {
             storeFile file('../buildsystem/wefan.keystore')
             storePassword 'wefan@baidu.com'
@@ -29,42 +22,55 @@ android {
     }
     buildTypes {
         debug {
+            def conf = rootProject.ext.debug
             buildConfigField("String", "API_URL", "\"debug\"")
-//            applicationIdSuffix '.debug'
+            applicationIdSuffix '.debug'
+//            signingConfig signingConfigs.release
+            resValue("string", "app_name", "\"${conf.appName}\"")
+        }
+//        zmy.initWith(buildTypes.debug)
+        zmy {
+            def conf = rootProject.ext.zmy
+            resValue("string", "app_name", "zmy_zmy_release")
+            buildConfigField("String", "API_URL", "\"${conf.appName}\"")
         }
         release {
+            def conf = rootProject.ext.release
             buildConfigField("String", "API_URL", "\"release\"")
+            resValue("string", "app_name", "\"${conf.appName}\"")
             minifyEnabled true
             shrinkResources true
-//            signingConfig signingConfigs.release gradle v-2.2.1
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
-    productFlavors {
-//渠道一的配置
-        channelname1 {
-//把manifest中的“CHANNEL”变量名（key）的变量值（value）替换成xxx1
-//这里也可以把“"xxx1"” 换成name=> [CHANNEL:name]  这个的意思就是把value换成 channelname1
-//由于网上的乱七八糟的粘贴复制 所有网上的那些根本没说清楚，这里的CHANNEL必须要再manifest中有且对应 具体我写在下面代码块
-            manifestPlaceholders = [CHANNEL: "xxx1"]
-        }
-//渠道二的配置
-        channelname2 {
-            manifestPlaceholders = [CHANNEL: "xxx2"]
-        }
-
+//    productFlavors {
+//////渠道一的配置
+////        channelname1 {
+//////把manifest中的“CHANNEL”变量名（key）的变量值（value）替换成xxx1
+//////这里也可以把“"xxx1"” 换成name=> [CHANNEL:name]  这个的意思就是把value换成 channelname1
+//////由于网上的乱七八糟的粘贴复制 所有网上的那些根本没说清楚，这里的CHANNEL必须要再manifest中有且对应 具体我写在下面代码块
+////            manifestPlaceholders = [CHANNEL: "xxx1"]
+////        }
+//////渠道二的配置
+////        channelname2 {
+////            manifestPlaceholders = [CHANNEL: "xxx2"]
+////        }
+//
 //        channelname1{ }
 //        channelname2{ }
 ////执行all方法，循环把 channelname*赋值给manifest中的变量
 //        all { flavor ->
 //            flavor.manifestPlaceholders = [CHANNEL:name ]
 //        }
-    }
+//    }
 }
 
 dependencies {
@@ -89,43 +95,54 @@ dependencies {
 //    }
 //}
 
-class TimingsListener implements TaskExecutionListener, BuildListener {
-    private Clock clock
-    private timings = []
-
-    @Override
-    void beforeExecute(Task task) {
-        clock = new org.gradle.util.Clock()
-    }
-
-    @Override
-    void afterExecute(Task task, TaskState taskState) {
-        def ms = clock.timeInMs
-        timings.add([ms, task.path])
-        task.project.logger.warn "${task.path} took ${ms}ms"
-    }
-
-    @Override
-    void buildFinished(BuildResult result) {
-        println "Task timings:"
-        for (timing in timings) {
-            if (timing[0] >= 50) {
-                printf "%7sms  %s\n", timing
-            }
-        }
-    }
-
-    @Override
-    void buildStarted(Gradle gradle) {}
-
-    @Override
-    void projectsEvaluated(Gradle gradle) {}
-
-    @Override
-    void projectsLoaded(Gradle gradle) {}
-
-    @Override
-    void settingsEvaluated(Settings settings) {}
+afterEvaluate {
+//    android.applicationVariants.each { variant ->
+//        def dx = tasks.findByName("dex${variant.name.capitalize()}")
+//        def hello = "hello${variant.name.capitalize()}"
+//        task(hello) << {
+//            println "hello"
+//        }
+//        tasks.findByName(hello).dependsOn dx.taskDependencies.getDependencies(dx)
+//        dx.dependsOn tasks.findByName(hello)
+//    }
 }
 
-gradle.addListener new TimingsListener()
+//class TimingsListener implements TaskExecutionListener, BuildListener {
+//    private Clock clock
+//    private timings = []
+//
+//    @Override
+//    void beforeExecute(Task task) {
+//        clock = new org.gradle.util.Clock()
+//    }
+//
+//    @Override
+//    void afterExecute(Task task, TaskState taskState) {
+//        def ms = clock.timeInMs
+//        timings.add([ms, task.path])
+//        task.project.logger.warn "${task.path} took ${ms}ms"
+//    }
+//
+//    @Override
+//    void buildFinished(BuildResult result) {
+//        println "Task timings:"
+//        for (timing in timings) {
+//            if (timing[0] >= 50) {
+//                printf "%7sms  %s\n", timing
+//            }
+//        }
+//    }
+//
+//    @Override
+//    void buildStarted(Gradle gradle) {}
+//
+//    @Override
+//    void projectsEvaluated(Gradle gradle) {}
+//
+//    @Override
+//    void projectsLoaded(Gradle gradle) {}
+//
+//    @Override
+//    void settingsEvaluated(Settings settings) {}
+//}
+//gradle.addListener new TimingsListener()
