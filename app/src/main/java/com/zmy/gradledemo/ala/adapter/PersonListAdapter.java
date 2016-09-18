@@ -24,13 +24,13 @@ public class PersonListAdapter extends BaseAdapter {
     private List<PersonUserData> list;
     private int type;
 
-    public PersonListAdapter(Context context, int type) {
+    public PersonListAdapter(Context context) {
         this.context = context;
-        this.type = type;
     }
 
-    public void setData(List<PersonUserData> list) {
+    public void setData(List<PersonUserData> list, int type) {
         this.list = list;
+        this.type = type;
         notifyDataSetChanged();
     }
 
@@ -58,7 +58,7 @@ public class PersonListAdapter extends BaseAdapter {
         PersonFansViewHolder fansViewHolder = null;
         if (convertView == null) {
             if (type == PersonUserData.PERSON_RECORDS_TYPE) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.person_info_item, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.person_record_item, null);
                 recordViewHolder = new PersonRecordViewHolder();
                 recordViewHolder.record_image = (ImageView) convertView.findViewById(R.id.record_image);
                 recordViewHolder.record_location = (TextView) convertView.findViewById(R.id.record_location);
@@ -67,7 +67,7 @@ public class PersonListAdapter extends BaseAdapter {
                 recordViewHolder.record_see_user = (TextView) convertView.findViewById(R.id.record_see_user);
                 convertView.setTag(recordViewHolder);
             } else {
-                convertView = LayoutInflater.from(context).inflate(R.layout.person_record_item, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.person_info_item, null);
                 fansViewHolder = new PersonFansViewHolder();
                 fansViewHolder.attention_operation = (ImageView) convertView.findViewById(R.id.attention_operation);
                 fansViewHolder.user_icon = (ImageView) convertView.findViewById(R.id.user_icon);

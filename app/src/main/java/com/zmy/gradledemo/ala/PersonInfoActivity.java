@@ -1,9 +1,11 @@
 package com.zmy.gradledemo.ala;
 
 import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -130,8 +132,22 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 
     }
 
+    private long lastFinishTime;
+
     @Override
     public void finish() {
+        if (System.currentTimeMillis() - lastFinishTime < 300) {
+//            person_card_layout.clearAnimation();
+//            Animation animation = AnimationUtils.loadAnimation(this, R.anim.push_up_out);
+//            animation.setDuration(0);
+//            person_card_layout.setAnimation(animation);
+//            person_card_layout.setVisibility(View.GONE);
+//            super.finish();
+//            overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
+            return;
+        }
+        lastFinishTime = System.currentTimeMillis();
+
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.push_up_out);
         person_card_layout.setAnimation(animation);
         person_card_layout.setVisibility(View.GONE);
@@ -207,22 +223,40 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
         if (iconHeight == 0) {
             iconHeight = iconLayout.getMeasuredHeight();
         }
-        final int startValue = isShow ? 0 : 1000;
-        final int endValue = isShow ? 1000 : 0;
+        final int startValue = isShow ? 0 : 1200;
+        final int endValue = isShow ? 1200 : 0;
 
 
         if (isShow) {
-            report.setVisibility(View.GONE);
-            operationLayout.setVisibility(View.GONE);
-            idLayout.setVisibility(View.GONE);
-            aMoney.setVisibility(View.GONE);
-            userSex.setVisibility(View.GONE);
-            userGrade.setVisibility(View.GONE);
+//            report.setVisibility(View.GONE);
+//            operationLayout.setVisibility(View.GONE);
+//            idLayout.setVisibility(View.GONE);
+//            aMoney.setVisibility(View.GONE);
+//            userSex.setVisibility(View.GONE);
+//            userGrade.setVisibility(View.GONE);
 
             Animation animation = AnimationUtils.loadAnimation(this, R.anim.icon_scale_out);
             iconLayout.setAnimation(animation);
             animation.setDuration(300);
             animation.setFillAfter(true);
+            iconLayout.setVisibility(View.GONE);
+//            animation.setAnimationListener(new Animation.AnimationListener() {
+//                @Override
+//                public void onAnimationStart(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationEnd(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(Animation animation) {
+//
+//                }
+//            });
+//            ObjectAnimator animator = ObjectAnimator.ofFloat(iconLayout, "scaleX", )
 
 //            iconLayout.animate().scaleX(0).scaleY(0).setDuration(300).setListener(new Animator.AnimatorListener() {
 //                @Override
@@ -245,8 +279,8 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
 //
 //                }
 //            }).start();
-            nameLayout.animate().translationY(-iconHeight).setDuration(300).start();
-            numLayout.animate().translationY(-iconHeight).setDuration(300).start();
+            nameLayout.animate().translationY(-20).setDuration(300).start();
+            numLayout.animate().translationY(-20).setDuration(300).start();
 
 //            fragmengContainer.setVisibility(View.VISIBLE);
         } else {
@@ -261,6 +295,23 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
             iconLayout.setAnimation(animation);
             animation.setDuration(300);
             animation.setFillAfter(true);
+            iconLayout.setVisibility(View.VISIBLE);
+//            animation.setAnimationListener(new Animation.AnimationListener() {
+//                @Override
+//                public void onAnimationStart(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationEnd(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(Animation animation) {
+//
+//                }
+//            });
 //            iconLayout.animate().scaleX(1).scaleY(1).setDuration(300).setListener(new Animator.AnimatorListener() {
 //                @Override
 //                public void onAnimationStart(Animator animation) {
@@ -299,7 +350,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                     public void onAnimationUpdate(ValueAnimator ballBouncer) {
                         int animatedValue = (Integer) ballBouncer
                                 .getAnimatedValue();
-//                        Log.e("zmy", "anvalue   = "+animatedValue + "    isshow = "+isShow  + "   startValue = "+startValue);
+                        Log.e("zmy", "anvalue   = "+animatedValue + "    isshow = "+isShow  + "   startValue = "+startValue);
                         if (!isShow && animatedValue <= startValue / 4 && report.getVisibility() == View.GONE) {
 //                            Log.e("zmy", "in = "+animatedValue);
                             report.setVisibility(View.VISIBLE);
@@ -309,6 +360,24 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                             userSex.setVisibility(View.VISIBLE);
                             userGrade.setVisibility(View.VISIBLE);
                         }
+                        if (!isShow && animatedValue == startValue) {
+//                            operationLayout.setVisibility(View.VISIBLE);
+                        }
+
+                        if (isShow && animatedValue >= endValue / 8 && report.getVisibility() == View.VISIBLE) {
+                            report.setVisibility(View.GONE);
+                            operationLayout.setVisibility(View.GONE);
+                            idLayout.setVisibility(View.GONE);
+                            aMoney.setVisibility(View.GONE);
+                            userSex.setVisibility(View.GONE);
+                            userGrade.setVisibility(View.GONE);
+                        }
+
+                        if (!isShow && animatedValue == endValue) {
+//                            operationLayout.setVisibility(View.GONE);
+                        }
+
+
                         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) fragmengContainer.getLayoutParams();
                         lp.height = animatedValue;
                         fragmengContainer.setLayoutParams(lp);

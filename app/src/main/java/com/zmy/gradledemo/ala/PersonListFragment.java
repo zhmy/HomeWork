@@ -52,35 +52,29 @@ public class PersonListFragment extends Fragment {
     }
 
     private void initData() {
-        Object data;
-        Gson gson = new Gson();
+        Object data = getData();
         switch (position) {
             case 0:
-                adapter = new PersonListAdapter(getContext(), PersonUserData.PERSON_RECORDS_TYPE);
-                data = getData();
-                PersonRecordsData.Data recordData = (PersonRecordsData.Data) data;
-                adapter.setData(recordData.getFeed_list());
+                PersonRecordsData.Data recordData = ((PersonRecordsData) data).getData();
+                adapter.setData(recordData.getFeed_list(), PersonUserData.PERSON_RECORDS_TYPE);
                 break;
             case 1:
-                adapter = new PersonListAdapter(getContext(), PersonUserData.PERSON_FANS_TYPE);
-                data = getData();
-                PersonFansData.Data fansData = (PersonFansData.Data) data;
-                adapter.setData(fansData.getList());
+                PersonFansData.Data fansData = ((PersonFansData) data).getData();
+                adapter.setData(fansData.getList(), PersonUserData.PERSON_FANS_TYPE);
                 break;
             case 2:
-                adapter = new PersonListAdapter(getContext(), PersonUserData.PERSON_FOLLOWS_TYPE);
-                data = getData();
-                PersonFollowsData.Data followsData = (PersonFollowsData.Data) data;
-                adapter.setData(followsData.getList());
+                PersonFollowsData.Data followsData = ((PersonFollowsData) data).getData();
+                adapter.setData(followsData.getList(), PersonUserData.PERSON_FOLLOWS_TYPE);
                 break;
             default:
                 break;
         }
-        listview.setAdapter(adapter);
     }
 
     private void initView(View rootView) {
         listview = (BdListView) rootView.findViewById(R.id.listview);
+        adapter = new PersonListAdapter(getContext());
+        listview.setAdapter(adapter);
     }
 
     private Object getData() {
@@ -111,13 +105,13 @@ public class PersonListFragment extends Fragment {
 
         switch (position) {
             case 0:
-                 data = gson.fromJson(local, PersonRecordsData.Data.class);
+                 data = gson.fromJson(local, PersonRecordsData.class);
                 break;
             case 1:
-                data = gson.fromJson(local, PersonFansData.Data.class);
+                data = gson.fromJson(local, PersonFansData.class);
                 break;
             case 2:
-                data = gson.fromJson(local, PersonFollowsData.Data.class);
+                data = gson.fromJson(local, PersonFollowsData.class);
                 break;
         }
         return data;
