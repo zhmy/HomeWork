@@ -12,11 +12,15 @@ import com.zmy.gradledemo.nativemodule.BGNativeExamplePackage;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by zmy on 16/9/6.
  */
 public class BaseApplication extends Application implements ReactApplication {
+
+    public static ArrayBlockingQueue<String> myBlockingQueue = new ArrayBlockingQueue<String>(10);
+
     public static final String BROADCAST_CHANGE_SHARED_PREF = "com.baidu.tieba.broadcast.changeSharedPref";
     private static BaseApplication application;
     @Override

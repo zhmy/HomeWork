@@ -22,11 +22,31 @@ import ReactTestView from './ReactTestView'
 import ReactToolTipView from './ReactToolTipView'
 
 export class ZmyNative extends Component {
+    finish() {
+    var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
+    BGNativeModuleExample.finishActivity('sss');
+    }
   render() {
     return (
       <View style={styles.container}>
+
+      <ReactToolTipView
+              actions={[{
+                                          text: '关闭',
+                                          onPress: () => {
+                                            this.finish()
+                                          }
+                                      }]}
+              underlayColor='transparent'>
+
+              <Text style={styles.welcome}>
+                Welcome to React Native 哈哈!
+              </Text>
+
+              </ReactToolTipView>
+
         <Text style={styles.welcome}>
-          Welcome to React Nativehaha!
+          Welcome to React Native!
           ssss
         </Text>
         <Text style={styles.instructions}>
@@ -42,7 +62,7 @@ export class ZmyNative extends Component {
   }
 }
 
-class hello extends Component {
+export class hello extends Component {
 
     componentDidMount() {
         var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
@@ -76,24 +96,36 @@ class hello extends Component {
 
     }
 
+    startNative(text) {
+        var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
+        BGNativeModuleExample.startActivityByString(text)
+    }
+
+    startNativeForResult(text) {
+        var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
+        BGNativeModuleExample.startActivityForResult(text, 100, (succ)=>{ToastAndroid.show(succ, ToastAndroid.SHORT)}, (err)=>{console.warn(err)})
+    }
+
+
 state = {
     trueSwitchIsOn: true,
     falseSwitchIsOn: false,
     tooltipActions : [{
-                   text: '删除',
+                   text: '打开RnTestActivity',
                    onPress: () => {
-                     console.warn('wahhah');
+                     this.startNative('com.zmy.gradledemo.rn.RnTestActivity')
                    }
-               }],
+               }, {
+                                     text: '打开RnTestActivity For Result',
+                                     onPress: () => {
+this.startNativeForResult('com.zmy.gradledemo.rn.RnTestActivity')
+                                     }
+                                 }],
   };
-
-
 
   render() {
     return (
       <View style={styles.container}>
-
-
         <ReactToolTipView
         actions={this.state.tooltipActions}
         underlayColor='transparent'>

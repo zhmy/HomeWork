@@ -1,10 +1,12 @@
 package com.zmy.gradledemo.nativemodule;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -13,6 +15,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.zmy.library.BaseApplication;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +70,9 @@ public class BGNativeExampleModule extends ReactContextBaseJavaModule implements
         Log.e("zmy", info.toString());
     }
 
+    /**
+     * 获取当前activity传递的intent
+     */
     @ReactMethod
     public void getDataFromIntent(Callback callback) {
         Activity activity = getCurrentActivity();
@@ -91,6 +97,74 @@ public class BGNativeExampleModule extends ReactContextBaseJavaModule implements
             promise.reject(isResolve.toString());
         }
     }
+
+    /**
+     * js跳转nativeActivity
+     */
+
+    @ReactMethod
+    public void startActivityByString(String activityName){
+        try {
+            Activity currentActivity = getCurrentActivity();
+            if (null != currentActivity) {
+                Class aimActivity = Class.forName(activityName);
+                Intent intent = new Intent(currentActivity, aimActivity);
+                currentActivity.startActivity(intent);
+            }
+        } catch (Exception e) {
+            throw new JSApplicationIllegalArgumentException(
+                    "Could not open the activity : " + e.getMessage());
+        }
+    }
+
+    /**
+     *
+     * native 打开js for result
+     * js 的回调
+     */
+    @ReactMethod
+    public void finishActivity(String result){
+        Log.e("zmy", "result = "+result);
+        Activity currentActivity = getCurrentActivity();
+        Intent intent = new Intent();
+        intent.putExtra("result",result);
+        currentActivity.setResult(100, intent);
+        currentActivity.finish();
+    }
+
+
+
+    @ReactMethod
+    public void startActivityForResult(String activityName,int requestCode,final Callback successCallback, Callback erroCallback){
+        try {
+            Activity currentActivity = getCurrentActivity();
+            if ( null!= currentActivity) {
+                Class aimActivity = Class.forName(activityName);
+                Intent intent = new Intent(currentActivity,aimActivity);
+                currentActivity.startActivityForResult(intent,requestCode);
+
+                new Thread(){
+
+                    @Override
+                    public void run() {
+                        String result = null;
+                        try {
+                            result = BaseApplication.myBlockingQueue.take();
+                            successCallback.invoke(result);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+
+            }
+        } catch (Exception e) {
+            erroCallback.invoke(e.getMessage());
+            throw new JSApplicationIllegalArgumentException(
+                    "Could not open the activity : " + e.getMessage());
+        }
+    }
+
 
     @Nullable
     @Override

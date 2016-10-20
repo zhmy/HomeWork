@@ -9,4 +9,5 @@ public class HelloFragment extends ReactFragment {
     public String getMainComponentName() {
         return "hello";
     }
+
 }

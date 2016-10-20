@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,9 @@ import com.zmy.gradledemo.BuildConfig;
 import com.zmy.gradledemo.MainApplication;
 import com.zmy.gradledemo.R;
 import com.zmy.gradledemo.nativeview.ReactTestView;
+import com.zmy.library.BaseApplication;
+
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by zmy on 2016/10/11.
@@ -61,7 +65,7 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
             public void onClick(View v) {
                 popWindowView.dismiss();
 
-                Toast.makeText(RnMainActivity.this, (String)v.getTag(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RnMainActivity.this, (String) v.getTag(), Toast.LENGTH_SHORT).show();
             }
         });
         popWindowView.setData(new String[]{"删除", "分享"});
@@ -102,4 +106,22 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
     public void onClick(View v) {
         popWindowView.show(v);
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 100) {
+            String result = data.getStringExtra("result");
+            if (TextUtils.isEmpty(result)) {
+                BaseApplication.myBlockingQueue.add(result);
+            } else {
+                BaseApplication.myBlockingQueue.add("无数据传回");
+            }
+        } else {
+            BaseApplication.myBlockingQueue.add("没有");
+        }
+    }
+
+
 }
