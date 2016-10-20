@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.zmy.gradledemo.ala.PersonWrapperFragment;
 import com.zmy.gradledemo.ala.PersonInfoActivity;
 import com.zmy.gradledemo.alazan.PeriscopeLayout;
+import com.zmy.gradledemo.rn.RnTestActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +39,18 @@ public class MainActivity extends AppCompatActivity
     View inner;
     private View zan_bg;
     private PeriscopeLayout zanView;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("zmy", "MainActivity onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("zmy", "MainActivity onResume");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +75,10 @@ public class MainActivity extends AppCompatActivity
         api_url.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("zmy", "click");
                 if (BuildConfig.DEBUG) {
-                    startActivity(new Intent(MainActivity.this, PersonInfoActivity.class));
+//                    startActivity(new Intent(MainActivity.this, PersonInfoActivity.class));
+                    startActivity(new Intent(MainActivity.this, RnTestActivity.class));
                 } else {
                     startCloseAnim(!isShowClose);
                 }

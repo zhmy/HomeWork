@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zmy.gradledemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -15,6 +18,34 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".ala.PersonInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Person_Activity">
+
+
+        </activity>
+
+        <provider
+            android:name="com.zmy.library.MainSharedPrefProvider"
+            android:authorities="${applicationId}.MainSharedPrefProvider"
+            android:exported="false" />
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="${CHANNEL}" /> -->
+
+        <activity
+            android:name=".rn.RnMainActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,18 +53,12 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ala.PersonInfoActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme_Person_Activity"></activity>
 
-        <provider
-            android:name="com.zmy.library.MainSharedPrefProvider"
-            android:authorities="${applicationId}.MainSharedPrefProvider"
-            android:exported="false" />
-        <!--<meta-data-->
-            <!--android:name="UMENG_CHANNEL"-->
-            <!--android:value="${CHANNEL}" />-->
+        <activity android:name=".rn.RnTestActivity">
+
+        </activity>
+
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
 
 </manifest>

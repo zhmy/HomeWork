@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GradleDemo.iml" filepath="$PROJECT_DIR$/GradleDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/node_modules/gl-react-native/android/RNGL.iml" filepath="$PROJECT_DIR$/node_modules/gl-react-native/android/RNGL.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tooltip/tooltip.iml" filepath="$PROJECT_DIR$/tooltip/tooltip.iml" />
     </modules>
   </component>
 </project>

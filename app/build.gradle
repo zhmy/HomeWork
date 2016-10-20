@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
-
+//apply from: "../node_modules/react-native/react.gradle"
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId rootProject.app.applicationId
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName rootProject.app.versionName
 //        manifestPlaceholders = [ activityLabel:"defaultName"]
+        project.archivesBaseName = "wefan";
     }
     signingConfigs {
         release {
@@ -25,72 +26,93 @@ android {
             def conf = rootProject.debug
             buildConfigField("String", "API_URL", "\"debug\"")
             applicationIdSuffix '.debug'
-            resValue("string", "app_name", "\"${conf.appName}\"")
+//            resValue("string", "app_name", "\"${conf.appName}\"")
         }
         release {
             def conf = rootProject.release
             buildConfigField("String", "API_URL", "\"release\"")
-            resValue("string", "app_name", "\"${conf.appName}\"")
+//            resValue("string", "app_name", "\"${conf.appName}\"")
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-//        zmy.initWith(buildTypes.debug)
-        zmy {
+        zmyz.initWith(buildTypes.debug)
+        zmyz {
             def conf = rootProject.zmy
-            resValues.app_name = "zmy_zmy_release"
-            buildConfigFields.API_URL = "\"${conf.appName}\""
+//            resValue("string", "app_name", "\"${conf.appName}\"")
+            buildConfigField("String", "API_URL", "\"zmy\"")
         }
     }
-
+//    productFlavors {
+//        /*配置一*/
+//
+//        //渠道一的配置
+//        channelname1 {
+//            //把manifest中的“CHANNEL”变量名（key）的变量值（value）替换成xxx1
+//            //这里也可以把“"xxx1"” 换成name=> [CHANNEL:name]  这个的意思就是把value换成 channelname1
+//            //由于网上的乱七八糟的粘贴复制 所有网上的那些根本没说清楚，这里的CHANNEL必须要再manifest中有且对应 具体我写在下面代码块
+//            manifestPlaceholders = [CHANNEL: "xxx1"]
+//        }
+//        //渠道二的配置
+//        channelname2 {
+//            manifestPlaceholders = [CHANNEL: "xxx2"]
+//        }
+//
+//        /*配置二*/
+//        channelname1 {}
+//        channelname2 {}
+//        //执行all方法，循环把 channelname*赋值给manifest中的变量
+//        all { flavor ->
+//            flavor.manifestPlaceholders = [CHANNEL: name]
+//        }
+//    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-
-//    productFlavors {
-//////渠道一的配置
-////        channelname1 {
-//////把manifest中的“CHANNEL”变量名（key）的变量值（value）替换成xxx1
-//////这里也可以把“"xxx1"” 换成name=> [CHANNEL:name]  这个的意思就是把value换成 channelname1
-//////由于网上的乱七八糟的粘贴复制 所有网上的那些根本没说清楚，这里的CHANNEL必须要再manifest中有且对应 具体我写在下面代码块
-////            manifestPlaceholders = [CHANNEL: "xxx1"]
-////        }
-//////渠道二的配置
-////        channelname2 {
-////            manifestPlaceholders = [CHANNEL: "xxx2"]
-////        }
-//
-//        channelname1{ }
-//        channelname2{ }
-////执行all方法，循环把 channelname*赋值给manifest中的变量
-//        all { flavor ->
-//            flavor.manifestPlaceholders = [CHANNEL:name ]
-//        }
-//    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    compile project(':library')
+
+
+    compile project(':RNGL')
+
+    debugCompile project(path: ':library', configuration: 'debug')
+    releaseCompile project(path: ':library', configuration: 'release')
+    zmyzCompile project(path: ':library', configuration: 'zmyz')
+
+    compile "com.facebook.react:react-native:+"
 }
 
-//前面说了，我要把jar包拷贝到指定的目录。对于Android编译，我一般指定gradle assemble
-//它默认编译debug和release两种输出。所以，下面这个段代码表示：
-//tasks代表一个Projects中的所有Task，是一个容器。getByName表示找到指定名称的任务。
-//我这里要找的assemble任务，然后我通过doLast添加了一个Action。这个Action就是copy
-//产出物到我设置的目标目录中去
-//tasks.getByName("assemble"){
-//    it.doLast{
-//        println "$project.name: After assemble, jar libs are copied tolocal repository"
-//        copyOutput(true)
-//    }
-//}
+task hello {
+    doLast {
+        println 'Hello zmy!'
+        println "zmy $projectDir"
+        println "zmy $rootDir"
+    }
+}
+
+tasks.getByName("assemble") {
+    it.doLast {
+        println "$project.name: After assemble"
+        rootProject.renameApks()
+
+        println "$projectDir"
+        println "$rootDir"
+    }
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def file = output.outputFile
+        output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + android.defaultConfig.versionName + ".apk"))
+    }
+}
 
 /*
   因为我的项目只提供最终的release编译出来的Jar包给其他人，所以不需要编译debug版的东西
@@ -101,68 +123,58 @@ dependencies {
 //    disableDebugBuild()
 //}
 
-//android.applicationVariants.all { variant ->
-//    def buildType = variant.buildType
-//    def encoding = java.nio.charset.Charset.defaultCharset().toString()
-//    if (buildType.applicationIdSuffix) {
-////        def defaultPackageId = variant.applicationId.replaceAll(buildType.applicationIdSuffix,'')
-//        variant.mergeResources.doLast {
-//            def f = file("${buildDir}/intermediates/res/${variant.dirName}/values/values.xml")
-//            String content = f.getText(encoding)
-//            content = content.replaceAll('GradleDemo','GradleDemoBeta')
-//            f.write(content,encoding)
-//        }
-//    }
-//}
-
 afterEvaluate {
-//    android.applicationVariants.each { variant ->
-//        def dx = tasks.findByName("dex${variant.name.capitalize()}")
+    android.applicationVariants.each { variant ->
+        println("zzz   ${variant.name.capitalize()}")
+//        def dx = tasks.findByName("${variant.name.capitalize()}")
 //        def hello = "hello${variant.name.capitalize()}"
 //        task(hello) << {
 //            println "hello"
 //        }
 //        tasks.findByName(hello).dependsOn dx.taskDependencies.getDependencies(dx)
 //        dx.dependsOn tasks.findByName(hello)
-//    }
+    }
 }
 
-//class TimingsListener implements TaskExecutionListener, BuildListener {
-//    private Clock clock
-//    private timings = []
-//
-//    @Override
-//    void beforeExecute(Task task) {
-//        clock = new org.gradle.util.Clock()
-//    }
-//
-//    @Override
-//    void afterExecute(Task task, TaskState taskState) {
-//        def ms = clock.timeInMs
-//        timings.add([ms, task.path])
-//        task.project.logger.warn "${task.path} took ${ms}ms"
-//    }
-//
-//    @Override
-//    void buildFinished(BuildResult result) {
-//        println "Task timings:"
-//        for (timing in timings) {
-//            if (timing[0] >= 50) {
-//                printf "%7sms  %s\n", timing
-//            }
-//        }
-//    }
-//
-//    @Override
-//    void buildStarted(Gradle gradle) {}
-//
-//    @Override
-//    void projectsEvaluated(Gradle gradle) {}
-//
-//    @Override
-//    void projectsLoaded(Gradle gradle) {}
-//
-//    @Override
-//    void settingsEvaluated(Settings settings) {}
-//}
-//gradle.addListener new TimingsListener()
+class TimingsListener implements TaskExecutionListener, BuildListener {
+    private Clock clock
+    private timings = []
+
+    @Override
+    void beforeExecute(Task task) {
+        clock = new org.gradle.util.Clock()
+    }
+
+    @Override
+    void afterExecute(Task task, TaskState taskState) {
+        def ms = clock.timeInMs
+        timings.add([ms, task.path])
+        task.project.logger.warn "${task.path} took ${ms}ms"
+    }
+
+    @Override
+    void buildFinished(BuildResult result) {
+        println "Task timings:"
+        for (timing in timings) {
+            if (timing[0] >= 50) {
+                printf "%7sms  %s\n", timing
+            }
+        }
+
+
+    }
+
+    @Override
+    void buildStarted(Gradle gradle) {}
+
+    @Override
+    void projectsEvaluated(Gradle gradle) {}
+
+    @Override
+    void projectsLoaded(Gradle gradle) {}
+
+    @Override
+    void settingsEvaluated(Settings settings) {}
+}
+
+gradle.addListener new TimingsListener()

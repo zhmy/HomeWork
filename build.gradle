@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,7 +21,14 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            // All of React Native (JS, Android binaries) is installed from npm
+            url "$projectDir/../node_modules/react-native/android"
+        }
     }
+}
+subprojects{
+
 }
 //
 //task clean(type: Delete) {
@@ -29,7 +36,7 @@ allprojects {
 //}
 
 tasks.whenTaskAdded { task ->
-    if (task.name.contains('Androidtest')) {
+    if (task.name.contains('Channelname1Debug')) {
         task.enabled false
     }
 }

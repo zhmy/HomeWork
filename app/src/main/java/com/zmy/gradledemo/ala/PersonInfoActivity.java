@@ -3,6 +3,7 @@ package com.zmy.gradledemo.ala;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -20,7 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zmy.gradledemo.MainActivity;
 import com.zmy.gradledemo.R;
+import com.zmy.gradledemo.rn.RnTestActivity;
 
 /**
  * Created by zmy on 16/9/14.
@@ -119,6 +122,7 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("zmy", "onResume");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -168,6 +172,13 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
         });
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("zmy", "onPause");
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -196,6 +207,8 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                     startCloseAnim(!isShowClose);
                 }
                 showReport();
+
+                startActivity(new Intent(PersonInfoActivity.this, RnTestActivity.class));
                 break;
             case R.id.close:
                 finish();
