@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 //apply from: "../node_modules/react-native/react.gradle"
-
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -93,6 +93,8 @@ dependencies {
     compile 'com.android.support:support-vector-drawable:23.4.0'
     testCompile 'junit:junit:4.12'
 
+    compile project(':annotation')
+    apt project(":complier")
 
 
 }

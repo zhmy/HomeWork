@@ -1,4 +1,4 @@
-include ':app', ':library', ':tooltip'
+include ':app', ':library', ':tooltip', ':annotation', ':complier', ':lib'
 
 include ':RNGL'
 project(':RNGL').projectDir = new File(rootProject.projectDir, 'node_modules/gl-react-native/android')
