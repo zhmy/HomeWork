@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 //apply from: "../node_modules/react-native/react.gradle"
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -12,6 +14,7 @@ android {
         versionName rootProject.app.versionName
 //        manifestPlaceholders = [ activityLabel:"defaultName"]
         project.archivesBaseName = "wefan";
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         release {
@@ -76,8 +79,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:design:23.4.0'
 
 
     compile project(':RNGL')
@@ -86,7 +87,14 @@ dependencies {
     releaseCompile project(path: ':library', configuration: 'release')
     zmyzCompile project(path: ':library', configuration: 'zmyz')
 
-    compile "com.facebook.react:react-native:+"
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.facebook.react:react-native:+'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:support-vector-drawable:23.4.0'
+    testCompile 'junit:junit:4.12'
+
+
+
 }
 
 task hello {

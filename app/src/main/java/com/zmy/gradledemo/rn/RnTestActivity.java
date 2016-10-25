@@ -1,5 +1,7 @@
 package com.zmy.gradledemo.rn;
 
+import android.util.Log;
+
 import com.facebook.react.ReactActivity;
 import com.zmy.gradledemo.BuildConfig;
 
@@ -15,6 +17,9 @@ public class RnTestActivity extends ReactActivity {
         return BuildConfig.DEBUG;
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("zmy", "RnTestActivity onDestroy");
+    }
 }

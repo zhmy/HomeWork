@@ -18,20 +18,22 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <!-- ala test start -->
         <activity
             android:name=".ala.PersonInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme_Person_Activity">
+            android:theme="@style/Theme_Person_Activity"></activity>
+        <!-- ala test end -->
 
 
-        </activity>
+        <!-- gradle test start -->
 
         <provider
             android:name="com.zmy.library.MainSharedPrefProvider"
@@ -40,25 +42,43 @@
         <!-- <meta-data -->
         <!-- android:name="UMENG_CHANNEL" -->
         <!-- android:value="${CHANNEL}" /> -->
+        <!-- gradle test end -->
+
+
+        <!-- RN test start -->
 
         <activity
             android:name=".rn.RnMainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-
-
-        <activity android:name=".rn.RnTestActivity"/>
-
+        <activity android:name=".rn.RnTestActivity" />
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
 
+        <!-- RN test end -->
 
+
+        <!-- annotation test start -->
+
+        <activity android:name=".annotation.AnnotationActivity"></activity>
+
+        <!-- annotation test end -->
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings">
+
+
+
+
+        </activity>
     </application>
 
 </manifest>

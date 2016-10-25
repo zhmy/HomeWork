@@ -1,7 +1,9 @@
 package com.zmy.gradledemo;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
@@ -16,41 +18,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.zmy.gradledemo.ala.PersonWrapperFragment;
 import com.zmy.gradledemo.ala.PersonInfoActivity;
 import com.zmy.gradledemo.alazan.PeriscopeLayout;
+import com.zmy.gradledemo.annotation.AnnotationActivity;
+import com.zmy.gradledemo.rn.RnMainActivity;
 import com.zmy.gradledemo.rn.RnTestActivity;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private TextView api_url;
     private ListView listview;
     String[] strs = new String[]{
-            "first", "second", "third", "fourth", "fifth"
+            "RN test", "Annotation test", "third", "fourth", "fifth"
     };
 
     private SwipeRefreshLayout swipeLayout;
-    LinearLayout outer;
-    View inner;
+    private LinearLayout outer;
+    private View inner;
     private View zan_bg;
     private PeriscopeLayout zanView;
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e("zmy", "MainActivity onPause");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("zmy", "MainActivity onResume");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,49 +55,57 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         zan_bg = findViewById(R.id.zan_bg);
         zanView = (PeriscopeLayout) findViewById(R.id.zanView);
-        zan_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                zanView.startAnim(1);
-                zanView.addHeart();
-            }
-        });
+        zan_bg.setOnClickListener(this);
+
         outer = (LinearLayout) findViewById(R.id.outer);
         inner = findViewById(R.id.inner);
+        outer.setOnClickListener(this);
+
         api_url = (TextView) findViewById(R.id.api_url);
         api_url.setText(BuildConfig.API_URL);
-//        startCloseAnim(!isShowClose);
-        api_url.setOnClickListener(new View.OnClickListener() {
+        api_url.setOnClickListener(this);
+
+        listview = (ListView) findViewById(R.id.listview);
+        listview.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, strs));
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Log.e("zmy", "click");
-                if (BuildConfig.DEBUG) {
-//                    startActivity(new Intent(MainActivity.this, PersonInfoActivity.class));
-                    startActivity(new Intent(MainActivity.this, RnTestActivity.class));
-                } else {
-                    startCloseAnim(!isShowClose);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Class clazz = null;
+                switch (position) {
+                    case 0:
+                        clazz = RnMainActivity.class;
+                        break;
+                    case 1:
+                        clazz = AnnotationActivity.class;
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        break;
+                }
+                if (clazz != null) {
+                    startActivity(new Intent(MainActivity.this, clazz));
                 }
             }
         });
 
-
-
-
-
-//        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
-//        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        swipeLayout.setRefreshing(false);
-//                    }
-//                }, 2000);
-//            }
-//        });
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -123,43 +128,42 @@ public class MainActivity extends AppCompatActivity
 
     boolean isShowClose;
     PersonWrapperFragment personFragment;
+
     private void startCloseAnim(final boolean isShow) {
         isShowClose = isShow;
-        if (isShow) {
-            inner.setVisibility(View.VISIBLE);
-        } else {
-            inner.setVisibility(View.GONE);
-        }
 
-        if (isShow) {
-            personFragment = new PersonWrapperFragment();
-            FragmentTransaction transaction =  getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.push_up_in_overshoot, R.anim.push_up_out);
-            transaction.add(R.id.container, personFragment).commit();
-        } else {
-            FragmentTransaction transaction =  getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.push_up_in_overshoot, R.anim.push_up_out);
-            transaction.remove(personFragment).commit();
-        }
+//        if (isShow) {
+//            inner.setVisibility(View.VISIBLE);
+//        } else {
+//            inner.setVisibility(View.GONE);
+//        }
+//        if (isShow) {
+//            personFragment = new PersonWrapperFragment();
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.setCustomAnimations(R.anim.push_up_in_overshoot, R.anim.push_up_out);
+//            transaction.add(R.id.container, personFragment).commit();
+//        } else {
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.setCustomAnimations(R.anim.push_up_in_overshoot, R.anim.push_up_out);
+//            transaction.remove(personFragment).commit();
+//        }
 
+        final int startValue = isShow ? 0 : 200;
+        final int endValue = isShow ? 200 : 0;
 
-//        final int startValue = isShow ? 0 : 500;
-//        final int endValue = isShow ? 500 : 0;
-//
-//        ValueAnimator ballBouncer = ValueAnimator.ofInt(startValue, endValue);
-//        ballBouncer.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            public void onAnimationUpdate(ValueAnimator ballBouncer) {
-//                final int animatedValue = (Integer) ballBouncer
-//                        .getAnimatedValue();
-//                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) inner.getLayoutParams();
-//                lp.height = animatedValue;
-//                inner.setLayoutParams(lp);
-//                inner.invalidate();
-//            }
-//        });
-//
-//        ballBouncer.setDuration(300);
-//        ballBouncer.start();
+        ValueAnimator ballBouncer = ValueAnimator.ofInt(startValue, endValue);
+        ballBouncer.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator ballBouncer) {
+                final int animatedValue = (Integer) ballBouncer
+                        .getAnimatedValue();
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) inner.getLayoutParams();
+                lp.height = animatedValue;
+                inner.setLayoutParams(lp);
+            }
+        });
+
+        ballBouncer.setDuration(300);
+        ballBouncer.start();
     }
 
     @Override
@@ -217,5 +221,26 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.api_url:
+                if (BuildConfig.DEBUG) {
+                    startActivity(new Intent(MainActivity.this, PersonInfoActivity.class));
+                } else {
+                    startCloseAnim(!isShowClose);
+                }
+                break;
+            case R.id.zan_bg:
+                zanView.addHeart();
+                break;
+            case R.id.outer:
+                startCloseAnim(!isShowClose);
+                break;
+            default:
+                break;
+        }
     }
 }

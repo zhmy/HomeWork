@@ -8,7 +8,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import com.zmy.gradledemo.nativemodule.BGNativeExamplePackage;
+import com.zmy.gradledemo.nativemodule.NativePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,8 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class BaseApplication extends Application implements ReactApplication {
 
-    public static ArrayBlockingQueue<String> myBlockingQueue = new ArrayBlockingQueue<String>(10);
+
+    public static ArrayBlockingQueue<String> myBlockingQueue = new ArrayBlockingQueue<String>(1);
 
     public static final String BROADCAST_CHANGE_SHARED_PREF = "com.baidu.tieba.broadcast.changeSharedPref";
     private static BaseApplication application;
@@ -49,7 +50,7 @@ public class BaseApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
                     new ReactToolTipPackage(),
-                    new BGNativeExamplePackage()
+                    new NativePackage()
             );
         }
     };

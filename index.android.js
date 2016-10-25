@@ -23,8 +23,8 @@ import ReactToolTipView from './ReactToolTipView'
 
 export class ZmyNative extends Component {
     finish() {
-    var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
-    BGNativeModuleExample.finishActivity('sss');
+    let ZmyNativeModule = NativeModules.ZmyNativeModule;
+    ZmyNativeModule.finishActivity('sss');
     }
   render() {
     return (
@@ -64,17 +64,15 @@ export class ZmyNative extends Component {
 
 export class hello extends Component {
 
-    componentDidMount() {
-        var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
-//        console.log(BGNativeModuleExample);
-//        BGNativeModuleExample.testPrint("Jack", {
-//            height: '1.78m',
-//            weight: '7kg'
-//        });
+    ZmyNativeModule;
 
-        // BGNativeModuleExample.getDataFromIntent(data => {
-        //     console.warn(data);
-        // });
+    componentDidMount() {
+         ZmyNativeModule = NativeModules.ZmyNativeModule;
+         ZmyNativeModule.getDataFromIntent(success => {
+             console.warn(success);
+         }, error => {
+             console.warn(error);
+         });
 
 //        BGNativeModuleExample.getNativeClass(name => {
 //          console.warn("nativeClass: ", name);
@@ -97,13 +95,11 @@ export class hello extends Component {
     }
 
     startNative(text) {
-        var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
-        BGNativeModuleExample.startActivityByString(text)
+        ZmyNativeModule.startActivityByString(text)
     }
 
     startNativeForResult(text) {
-        var BGNativeModuleExample = NativeModules.BGNativeExampleModule;
-        BGNativeModuleExample.startActivityForResult(text, 100, (succ)=>{ToastAndroid.show(succ, ToastAndroid.SHORT)}, (err)=>{console.warn(err)})
+        ZmyNativeModule.startActivityForResult(text, 100, (succ)=>{ToastAndroid.show(succ, ToastAndroid.SHORT)}, (err)=>{console.warn(err)})
     }
 
 

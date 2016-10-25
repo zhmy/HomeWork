@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +85,7 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
     protected void onResume() {
         super.onResume();
         if (mReactInstanceManager != null) {
+            Log.e("zmy", " mReactInstanceManager != null main resumed");
             mReactInstanceManager.onHostResume(this, this);
         }
     }
@@ -91,7 +93,6 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onHostDestroy();
         }

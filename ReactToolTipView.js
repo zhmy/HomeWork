@@ -12,7 +12,7 @@ var RCTToolTipView = requireNativeComponent('RCTToolTipView', ToolTip);
 
 export default class ToolTip extends React.Component {
 
- tooltipView
+tooltipView
 
 constructor(props){
   super(props)
