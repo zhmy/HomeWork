@@ -207,8 +207,6 @@ public class PersonInfoActivity extends FragmentActivity implements View.OnClick
                     startCloseAnim(!isShowClose);
                 }
                 showReport();
-
-                startActivity(new Intent(PersonInfoActivity.this, RnTestActivity.class));
                 break;
             case R.id.close:
                 finish();

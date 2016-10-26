@@ -1,6 +1,7 @@
 package com.zmy.process;
 
 import com.google.auto.service.AutoService;
+import com.zmy.annotation.AnnotationClass;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
@@ -20,6 +21,8 @@ public class AnnotationProcesser extends AbstractProcessor {
         for (TypeElement te : annotations) {
             for (Element element : roundEnv.getElementsAnnotatedWith(te)) {
                 // do something
+                AnnotationClass annotationClass = element.getAnnotation(AnnotationClass.class);
+                System.out.println(element.toString());
             }
         }
         return true;
