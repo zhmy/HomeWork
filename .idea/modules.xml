@@ -9,7 +9,9 @@
       <module fileurl="file://$PROJECT_DIR$/complier/complier.iml" filepath="$PROJECT_DIR$/complier/complier.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mywear/mywear.iml" filepath="$PROJECT_DIR$/mywear/mywear.iml" />
       <module fileurl="file://$PROJECT_DIR$/tooltip/tooltip.iml" filepath="$PROJECT_DIR$/tooltip/tooltip.iml" />
+      <module fileurl="file://$PROJECT_DIR$/week_sdk/week_sdk.iml" filepath="$PROJECT_DIR$/week_sdk/week_sdk.iml" />
     </modules>
   </component>
 </project>
