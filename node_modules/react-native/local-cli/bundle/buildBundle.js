@@ -28,7 +28,7 @@ function buildBundle(args, config, output = outputBundle, packagerInstance) {
 
   const requestOpts = {
     entryFile: args.entryFile,
-    sourceMapUrl: args.sourcemapOutput,
+    sourceMapUrl: args.sourcemapOutput && path.basename(args.sourcemapOutput),
     dev: args.dev,
     minify: !args.dev,
     platform: args.platform,
@@ -40,13 +40,18 @@ function buildBundle(args, config, output = outputBundle, packagerInstance) {
   if (!packagerInstance) {
     let assetExts = (config.getAssetExts && config.getAssetExts()) || [];
 
+    const transformModulePath =
+      args.transformer ? path.resolve(args.transformer) :
+      typeof config.getTransformModulePath === 'function' ? config.getTransformModulePath() :
+      undefined;
+
     const options = {
       projectRoots: config.getProjectRoots(),
       assetExts: defaultAssetExts.concat(assetExts),
       assetRoots: config.getAssetRoots(),
-      blacklistRE: config.getBlacklistRE(args.platform),
+      blacklistRE: config.getBlacklistRE(),
       getTransformOptionsModulePath: config.getTransformOptionsModulePath,
-      transformModulePath: args.transformer,
+      transformModulePath: transformModulePath,
       extraNodeModules: config.extraNodeModules,
       nonPersistent: true,
       resetCache: args.resetCache,

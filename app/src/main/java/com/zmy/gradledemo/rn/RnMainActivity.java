@@ -3,6 +3,7 @@ package com.zmy.gradledemo.rn;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,6 +35,8 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
 
     private ToolTipPopWindow popWindowView;
 
+    private ViewPager viewpager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +53,8 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
         mReactInstanceManager =
                 ((MainApplication) getApplication()).getReactNativeHost().getReactInstanceManager();
 
-        Fragment viewFragment = new HelloFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.rn_frame_layout, viewFragment).commit();
+//        Fragment viewFragment = new HelloFragment();
+//        getSupportFragmentManager().beginTransaction().add(R.id.rn_frame_layout, viewFragment).commit();
 
         rn_test1 = (ReactTestView) findViewById(R.id.rn_test1);
         rn_test2 = (ReactTestView) findViewById(R.id.rn_test2);
@@ -70,6 +73,11 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
             }
         });
         popWindowView.setData(new String[]{"删除", "分享"});
+
+
+        viewpager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewpager.setAdapter(adapter);
     }
 
 

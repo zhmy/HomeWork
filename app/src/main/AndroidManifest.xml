@@ -76,6 +76,8 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".vector.TestVectorActivity"></activity>
+
+        <activity android:name=".text.TextViewActivity"></activity>
     </application>
 
 </manifest>

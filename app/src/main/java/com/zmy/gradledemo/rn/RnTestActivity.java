@@ -13,11 +13,6 @@ public class RnTestActivity extends ReactActivity {
     }
 
     @Override
-    protected boolean getUseDeveloperSupport() {
-        return BuildConfig.DEBUG;
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.e("zmy", "RnTestActivity onDestroy");

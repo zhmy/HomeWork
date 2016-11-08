@@ -57,6 +57,10 @@ const validateOpts = declareOpts({
   minifyCode: {
     type: 'function',
   },
+  resetCache: {
+    type: 'boolean',
+    default: false,
+  },
 });
 
 const getDependenciesValidateOpts = declareOpts({
@@ -105,10 +109,12 @@ class Resolver {
       preferNativePlatform: true,
       fileWatcher: opts.fileWatcher,
       cache: opts.cache,
-      shouldThrowOnUnresolvedErrors: (_, platform) => platform === 'ios',
+      shouldThrowOnUnresolvedErrors: (_, platform) => platform !== 'android',
       transformCode: opts.transformCode,
       extraNodeModules: opts.extraNodeModules,
       assetDependencies: ['react-native/Libraries/Image/AssetRegistry'],
+      // for jest-haste-map
+      resetCache: options.resetCache,
     });
 
     this._minifyCode = opts.minifyCode;
@@ -264,6 +270,10 @@ class Resolver {
   minifyModule({path, code, map}) {
     return this._minifyCode(path, code, map);
   }
+
+  getDependecyGraph() {
+    return this._depGraph;
+  }
 }
 
 function defineModuleCode(moduleName, code, verboseName = '', dev = true) {
@@ -280,7 +290,7 @@ function defineModuleCode(moduleName, code, verboseName = '', dev = true) {
 
 function definePolyfillCode(code,) {
   return [
-    `(function(global) {`,
+    '(function(global) {',
     code,
     `\n})(typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : this);`,
   ].join('');

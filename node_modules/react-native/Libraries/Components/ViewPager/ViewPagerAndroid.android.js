@@ -26,9 +26,9 @@ var VIEWPAGER_REF = 'viewPager';
 type Event = Object;
 
 export type ViewPagerScrollState = $Enum<{
-  idle: string;
-  dragging: string;
-  settling: string;
+  idle: string,
+  dragging: string,
+  settling: string,
 }>;
 
 /**
@@ -141,7 +141,7 @@ class ViewPagerAndroid extends React.Component {
   };
 
   componentDidMount() {
-    if (this.props.initialPage) {
+    if (this.props.initialPage != null) {
       this.setPageWithoutAnimation(this.props.initialPage);
     }
   }

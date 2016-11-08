@@ -12,4 +12,5 @@ public class TestVectorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_vector);
     }
+
 }
