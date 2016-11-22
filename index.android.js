@@ -16,10 +16,13 @@ import {
   Dimensions,
   ToastAndroid,
   TouchableHighlight,
+  TouchableOpacity,
+  ListView,
 } from 'react-native';
 
 import ReactTestView from './ReactTestView'
 import ReactToolTipView from './ReactToolTipView'
+import {Navigation} from 'react-native-navigation';
 
 export class ZmyNative extends Component {
     finish() {
@@ -45,10 +48,13 @@ export class ZmyNative extends Component {
 
               </ReactToolTipView>
 
+              <TouchableOpacity onPress = {console.warn(23)}>
+
         <Text style={styles.welcome}>
           Welcome to React Native!
           ssss
         </Text>
+        </TouchableOpacity>
         <Text style={styles.instructions}>
           To get started, edit index.android.js
         </Text>
@@ -146,6 +152,59 @@ this.startNativeForResult('com.zmy.gradledemo.rn.RnTestActivity')
   }
 }
 
+export class helloList extends Component {
+// 初始化模拟数据
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let data=[]
+    for(let i=0;i<1000;i++){
+        data.push({text:'lksdjf' + Math.random()})
+    }
+    this.state = {
+      dataSource: ds.cloneWithRows(data)
+    };
+  }
+
+  startNative() {
+        Navigation.startSingleScreenApp({
+        screen: {
+          screen: 'ZmyNative',
+          title: 'Navigation',
+          navigatorStyle: {
+            navBarBackgroundColor: '#4dbce9',
+            navBarTextColor: '#ffff00',
+            navBarSubtitleTextColor: '#ff0000',
+            navBarButtonColor: '#ffffff',
+            statusBarTextColorScheme: 'light'
+          }
+        },
+//        drawer: {
+//          left: {
+//            screen: 'example.SideMenu'
+//          }
+//        }
+        });
+//          ZmyNativeModule.startActivityByString(text)
+      }
+
+  render() {
+    return (
+      <View style={{flex: 1, paddingTop: 22}}>
+        <ListView
+          style={{backgroundColor:'red'}}
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => {
+          return <TouchableOpacity onPress={()=>{startNative()}}><Text style={{fontSize:20}}>{rowData.text}</Text></TouchableOpacity>
+          }
+          }
+        />
+      </View>
+    );
+  }
+
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -170,3 +229,4 @@ const styles = StyleSheet.create({
 
 AppRegistry.registerComponent('ZmyNative', () => ZmyNative);
 AppRegistry.registerComponent('hello', () => hello);
+AppRegistry.registerComponent('TiebaNext', () => helloList);

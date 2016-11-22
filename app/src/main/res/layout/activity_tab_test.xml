@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:tabGravity="center"
+        app:tabIndicatorColor="#ffff00"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#333333" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/tab1"
+        android:background="#f2f2f2">
+
+    </android.support.v4.view.ViewPager>
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/viewpager1"
+        app:tabGravity="center"
+        app:tabIndicatorColor="#ff8f00"
+        app:tabMaxWidth="0dp"
+        app:tabMode="scrollable" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/tab2"
+        android:background="#f2f2f2">
+
+    </android.support.v4.view.ViewPager>
+
+
+    <!--<com.zmy.gradledemo.tab.NextTabLayout-->
+    <!--android:id="@+id/tab3"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_below="@+id/viewpager2"-->
+    <!--app:tabPaddingStart="3dp"-->
+    <!--app:tabPaddingEnd="3dp"-->
+    <!--app:tabIndicatorColor="#ffd500"-->
+    <!--app:tabMode="scrollable" />-->
+
+    <com.zmy.gradledemo.tab.PagerSlidingTabStrip
+        android:id="@+id/tab3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewpager2" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/tab3"
+        android:background="#f2f2f2">
+
+    </android.support.v4.view.ViewPager>
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:tabMode="fixed" />
+
+</RelativeLayout>

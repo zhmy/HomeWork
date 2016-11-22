@@ -75,9 +75,13 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".vector.TestVectorActivity"></activity>
-
-        <activity android:name=".text.TextViewActivity"></activity>
+        <activity android:name=".vector.TestVectorActivity" />
+        <activity android:name=".text.TextViewActivity" />
+        <activity android:name=".tab.TabTestActivity" />
+        <activity
+            android:name=".rn.RnMain2Activity"
+            android:label="@string/title_activity_rn_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

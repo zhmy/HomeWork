@@ -9,6 +9,6 @@
     "gl-react": "^2.2.8",
     "gl-react-native": "^2.35.0-rc.0",
     "react": "15.3.1",
-    "react-native": "0.36.1"
+    "react-native": "^0.36.1"
   }
 }

@@ -7,7 +7,7 @@ package com.zmy.gradledemo.rn;
 public class Hello3Fragment extends ReactFragment {
     @Override
     public String getMainComponentName() {
-        return "hello";
+        return "helloList";
     }
 
 }

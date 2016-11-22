@@ -2,12 +2,15 @@ package com.zmy.library;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.baidu.wefan.tooltip.ReactToolTipPackage;
 import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
+import com.reactnativenavigation.NavigationApplication;
 import com.zmy.gradledemo.nativemodule.NativePackage;
 
 import java.util.Arrays;
@@ -17,7 +20,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 /**
  * Created by zmy on 16/9/6.
  */
-public class BaseApplication extends Application implements ReactApplication {
+public class BaseApplication extends NavigationApplication {
 
 
     public static ArrayBlockingQueue<String> myBlockingQueue = new ArrayBlockingQueue<String>(1);
@@ -39,24 +42,43 @@ public class BaseApplication extends Application implements ReactApplication {
     }
 
 
-    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-        @Override
-        protected boolean getUseDeveloperSupport() {
-            return BuildConfig.DEBUG;
-        }
+//    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+//        @Override
+//        protected boolean getUseDeveloperSupport() {
+//            return BuildConfig.DEBUG;
+//        }
+//
+//        @Override
+//        protected List<ReactPackage> getPackages() {
+//            return Arrays.<ReactPackage>asList(
+//                    new MainReactPackage(),
+//                    new ReactToolTipPackage(),
+//                    new NativePackage()
+//            );
+//        }
+//
+//        @Override
+//        protected ReactInstanceManager createReactInstanceManager() {
+//            return super.createReactInstanceManager();
+//        }
+//    };
 
-        @Override
-        protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage>asList(
-                    new MainReactPackage(),
-                    new ReactToolTipPackage(),
-                    new NativePackage()
-            );
-        }
-    };
+//    @Override
+//    public ReactNativeHost getReactNativeHost() {
+//        return mReactNativeHost;
+//    }
 
     @Override
-    public ReactNativeHost getReactNativeHost() {
-        return mReactNativeHost;
+    public boolean isDebug() {
+        return BuildConfig.DEBUG;
+    }
+
+    @Nullable
+    @Override
+    public List<ReactPackage> createAdditionalReactPackages() {
+        return Arrays.<ReactPackage>asList(
+                new ReactToolTipPackage(),
+                new NativePackage()
+        );
     }
 }

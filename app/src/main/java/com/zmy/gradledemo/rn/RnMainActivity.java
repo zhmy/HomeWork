@@ -3,6 +3,8 @@ package com.zmy.gradledemo.rn;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -26,7 +28,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * Created by zmy on 2016/10/11.
  */
 
-public class RnMainActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler, View.OnClickListener {
+public class RnMainActivity extends FragmentActivity implements DefaultHardwareBackBtnHandler, View.OnClickListener {
     private TextView api_url;
 
     private ReactInstanceManager mReactInstanceManager;
@@ -36,6 +38,23 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
     private ToolTipPopWindow popWindowView;
 
     private ViewPager viewpager;
+    Fragment viewFragment = new HelloFragment();
+    Fragment nativeFragment = new NativeFragment();
+    boolean isRN = true;
+    private Fragment mContent;
+
+    public void switchContent(Fragment from, Fragment to) {
+        if (mContent != to) {
+            mContent = to;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (!to.isAdded()) { // 先判断是否被add过
+                transaction.hide(from)
+                        .add(R.id.rn_frame_layout, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,15 +65,24 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
         api_url.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RnMainActivity.this, RnTestActivity.class));
+                startActivity(new Intent(RnMainActivity.this, RnMain2Activity.class));
+//                startActivity(new Intent(RnMainActivity.this, RnTestActivity.class));
+
+//                if (isRN) {
+//                    switchContent(viewFragment, nativeFragment);
+//                    isRN = false;
+//                } else {
+//                    switchContent(nativeFragment, viewFragment);
+//                    isRN = true;
+//                }
             }
         });
 
         mReactInstanceManager =
                 ((MainApplication) getApplication()).getReactNativeHost().getReactInstanceManager();
 
-//        Fragment viewFragment = new HelloFragment();
-//        getSupportFragmentManager().beginTransaction().add(R.id.rn_frame_layout, viewFragment).commit();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.rn_frame_layout, viewFragment).commit();
 
         rn_test1 = (ReactTestView) findViewById(R.id.rn_test1);
         rn_test2 = (ReactTestView) findViewById(R.id.rn_test2);
@@ -75,9 +103,9 @@ public class RnMainActivity extends AppCompatActivity implements DefaultHardware
         popWindowView.setData(new String[]{"删除", "分享"});
 
 
-        viewpager = (ViewPager) findViewById(R.id.viewpager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewpager.setAdapter(adapter);
+//        viewpager = (ViewPager) findViewById(R.id.viewpager);
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        viewpager.setAdapter(adapter);
     }
 
 

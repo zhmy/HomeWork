@@ -31,6 +31,7 @@ import com.zmy.gradledemo.alazan.PeriscopeLayout;
 import com.zmy.gradledemo.annotation.AnnotationActivity;
 import com.zmy.gradledemo.rn.RnMainActivity;
 import com.zmy.gradledemo.rn.RnTestActivity;
+import com.zmy.gradledemo.tab.TabTestActivity;
 import com.zmy.gradledemo.text.TextViewActivity;
 import com.zmy.gradledemo.vector.TestVectorActivity;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     private TextView api_url;
     private ListView listview;
     String[] strs = new String[]{
-            "RN test", "Annotation test", "Vector Drawable", "Text View", "fifth"
+            "RN test", "Annotation test", "Vector Drawable", "Text View", "Tab test"
     };
 
     private SwipeRefreshLayout swipeLayout;
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 3:
                         clazz = TextViewActivity.class;
+                        break;
+                    case 4:
+                        clazz = TabTestActivity.class;
                         break;
                     default:
                         break;

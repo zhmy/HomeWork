@@ -152,14 +152,14 @@ public class TextViewActivity extends AppCompatActivity {
 //                textView8.setText(str);
 //            }
 
-//            onSwitchText();
+            onSwitchText();
         }
     };
 
     int count = 0;
 
     private void doDynamic() {
-        handler.postDelayed(runnable, 300);
+        handler.postDelayed(runnable, 500);
     }
 
     private void setRasterizerSpan(TextView textView) {

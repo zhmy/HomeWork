@@ -2,3 +2,5 @@ include ':app', ':library', ':tooltip', ':annotation', ':complier', ':lib', ':my
 
 include ':RNGL'
 project(':RNGL').projectDir = new File(rootProject.projectDir, 'node_modules/gl-react-native/android')
+include ':react-native-navigation'
+project(':react-native-navigation').projectDir = new File(rootProject.projectDir, 'node_modules/react-native-navigation/android/app/')

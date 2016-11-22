@@ -92,7 +92,7 @@ dependencies {
     zmyzCompile project(path: ':library', configuration: 'zmyz')
 
     compile 'com.android.support:design:23.4.0'
-    compile 'com.facebook.react:react-native:0.36.1'
+    compile 'com.facebook.react:react-native:+'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:support-vector-drawable:23.4.0'
     testCompile 'junit:junit:4.12'
@@ -103,6 +103,7 @@ dependencies {
 //    compile project(':weex_sdk')
 
     compile 'com.bettervectordrawable:lib:0.8+'
+
 
 }
 
