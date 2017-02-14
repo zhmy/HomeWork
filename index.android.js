@@ -48,7 +48,11 @@ export class ZmyNative extends Component {
 
               </ReactToolTipView>
 
-              <TouchableOpacity onPress = {console.warn(23)}>
+              <TouchableOpacity onPress={()=>{
+                                                     this.props.navigator.push({
+                                                   screen: 'ZmyNative',
+                                                 });
+                                                      }}>
 
         <Text style={styles.welcome}>
           Welcome to React Native!
@@ -166,26 +170,26 @@ export class helloList extends Component {
     };
   }
 
-  startNative() {
+    componentWillMount() {
+//        console.warn('inmm')
+        DeviceEventEmitter.addListener("key1", info => {
+//        console.warn(info)
+        this.startNative2();
+        });
+
+    }
+
+
+  startNative2() {
+//  console.warn(this.props.navigator)
+//     this.props.navigator.push({
+//   screen: 'ZmyNative',
+// });
         Navigation.startSingleScreenApp({
         screen: {
           screen: 'ZmyNative',
-          title: 'Navigation',
-          navigatorStyle: {
-            navBarBackgroundColor: '#4dbce9',
-            navBarTextColor: '#ffff00',
-            navBarSubtitleTextColor: '#ff0000',
-            navBarButtonColor: '#ffffff',
-            statusBarTextColorScheme: 'light'
-          }
         },
-//        drawer: {
-//          left: {
-//            screen: 'example.SideMenu'
-//          }
-//        }
         });
-//          ZmyNativeModule.startActivityByString(text)
       }
 
   render() {
@@ -195,7 +199,7 @@ export class helloList extends Component {
           style={{backgroundColor:'red'}}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {
-          return <TouchableOpacity onPress={()=>{startNative()}}><Text style={{fontSize:20}}>{rowData.text}</Text></TouchableOpacity>
+          return <TouchableOpacity onPress={()=>{this.startNative2()}}><Text style={{fontSize:20}}>{rowData.text}</Text></TouchableOpacity>
           }
           }
         />
@@ -227,6 +231,9 @@ const styles = StyleSheet.create({
     },
 });
 
-AppRegistry.registerComponent('ZmyNative', () => ZmyNative);
-AppRegistry.registerComponent('hello', () => hello);
-AppRegistry.registerComponent('TiebaNext', () => helloList);
+//AppRegistry.registerComponent('ZmyNative', () => ZmyNative);
+//AppRegistry.registerComponent('hello', () => hello);
+//AppRegistry.registerComponent('TiebaNext', () => helloList);
+
+Navigation.registerComponent('ZmyNative', () => ZmyNative);
+Navigation.registerComponent('TiebaNext', () => helloList);

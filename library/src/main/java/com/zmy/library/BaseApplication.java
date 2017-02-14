@@ -9,6 +9,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.shell.MainReactPackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.zmy.gradledemo.nativemodule.NativePackage;
@@ -27,11 +28,22 @@ public class BaseApplication extends NavigationApplication {
 
     public static final String BROADCAST_CHANGE_SHARED_PREF = "com.baidu.tieba.broadcast.changeSharedPref";
     private static BaseApplication application;
+    private ReactContext reactContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
         application= this;
     }
+
+    public void setReactContext(ReactContext reactContext) {
+        this.reactContext = reactContext;
+    }
+
+    public ReactContext getReactContext() {
+        return reactContext;
+    }
+
 
     public static BaseApplication getInstance() {
         return application;

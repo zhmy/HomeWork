@@ -13,11 +13,8 @@
             <option value="$PROJECT_DIR$/complier" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/mywear" />
-            <option value="$PROJECT_DIR$/node_modules/gl-react-native/android" />
             <option value="$PROJECT_DIR$/node_modules/react-native-navigation/android/app" />
             <option value="$PROJECT_DIR$/tooltip" />
-            <option value="$PROJECT_DIR$/week_sdk" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -10,12 +10,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.wefan.tooltip.ToolTipPopWindow;
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.zmy.gradledemo.BuildConfig;
 import com.zmy.gradledemo.MainApplication;
 import com.zmy.gradledemo.R;
@@ -23,6 +29,8 @@ import com.zmy.gradledemo.nativeview.ReactTestView;
 import com.zmy.library.BaseApplication;
 
 import java.util.concurrent.ArrayBlockingQueue;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by zmy on 2016/10/11.
@@ -42,6 +50,7 @@ public class RnMainActivity extends FragmentActivity implements DefaultHardwareB
     Fragment nativeFragment = new NativeFragment();
     boolean isRN = true;
     private Fragment mContent;
+    private Button btn1, btn2, btn3, btn4;
 
     public void switchContent(Fragment from, Fragment to) {
         if (mContent != to) {
@@ -65,16 +74,16 @@ public class RnMainActivity extends FragmentActivity implements DefaultHardwareB
         api_url.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RnMainActivity.this, RnMain2Activity.class));
+//                startActivity(new Intent(RnMainActivity.this, RnMain2Activity.class));
 //                startActivity(new Intent(RnMainActivity.this, RnTestActivity.class));
 
-//                if (isRN) {
-//                    switchContent(viewFragment, nativeFragment);
-//                    isRN = false;
-//                } else {
-//                    switchContent(nativeFragment, viewFragment);
-//                    isRN = true;
-//                }
+                if (isRN) {
+                    switchContent(viewFragment, nativeFragment);
+                    isRN = false;
+                } else {
+                    switchContent(nativeFragment, viewFragment);
+                    isRN = true;
+                }
             }
         });
 
@@ -106,6 +115,20 @@ public class RnMainActivity extends FragmentActivity implements DefaultHardwareB
 //        viewpager = (ViewPager) findViewById(R.id.viewpager);
 //        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 //        viewpager.setAdapter(adapter);
+
+        initBtn();
+    }
+
+    private void initBtn() {
+        btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
+        btn3 = (Button) findViewById(R.id.btn3);
+        btn4 = (Button) findViewById(R.id.btn4);
+
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
     }
 
 
@@ -141,8 +164,35 @@ public class RnMainActivity extends FragmentActivity implements DefaultHardwareB
 
     @Override
     public void onClick(View v) {
-        popWindowView.show(v);
+        if (v == btn1) {
+            startActivity(new Intent(RnMainActivity.this, RnTestActivity.class));
+        } else if (v == btn2) {
+            startActivity(new Intent(RnMainActivity.this, RnMain2Activity.class));
+        } else if (v == btn3) {
+            callJsToNextPage();
+        } else if (v == btn4) {
+
+        } else {
+            popWindowView.show(v);
+        }
     }
+
+    private void callJsToNextPage() {
+        WritableMap event = Arguments.createMap();
+        event.putString("page", "secondPage");
+        ReactContext reactContext = BaseApplication.getInstance().getReactContext();
+        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("key1", event);
+    }
+
+//    public void onReceiveNativeEvent() {
+//        WritableMap event = Arguments.createMap();
+//        event.putString("message", "MyMessage");
+//        ReactContext reactContext = (ReactContext)getContext();
+//        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+//                getId(),
+//                "topChange",
+//                event);
+//    }
 
 
     @Override

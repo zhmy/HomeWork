@@ -141,7 +141,7 @@ var GESTURE_ACTIONS = [
  *
  * ```
  * import React, { Component } from 'react';
- * import { Text, Navigator } from 'react-native';
+ * import { Text, Navigator, TouchableHighlight } from 'react-native';
  *
  * export default class NavAllDay extends Component {
  *   render() {
@@ -307,6 +307,7 @@ var Navigator = React.createClass({
      *  - Navigator.SceneConfigs.FadeAndroid
      *  - Navigator.SceneConfigs.HorizontalSwipeJump
      *  - Navigator.SceneConfigs.HorizontalSwipeJumpFromRight
+     *  - Navigator.SceneConfigs.HorizontalSwipeJumpFromLeft
      *  - Navigator.SceneConfigs.VerticalUpSwipeJump
      *  - Navigator.SceneConfigs.VerticalDownSwipeJump
      *

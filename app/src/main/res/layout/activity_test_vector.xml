@@ -81,7 +81,7 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableBottom="@drawable/ic_set"
+        android:drawableBottom="@drawable/test"
         android:text="hilsllsl" />
 
 </RelativeLayout>
