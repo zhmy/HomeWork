@@ -74,7 +74,7 @@ public class BaseApplication extends NavigationApplication {
 //            return super.createReactInstanceManager();
 //        }
 //    };
-
+//
 //    @Override
 //    public ReactNativeHost getReactNativeHost() {
 //        return mReactNativeHost;

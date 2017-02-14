@@ -1,6 +1,7 @@
 package com.zmy.gradledemo.rn;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +71,13 @@ public class RnMainActivity extends FragmentActivity implements DefaultHardwareB
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
         setContentView(R.layout.activity_rn_main);
         api_url = (TextView) findViewById(R.id.api_url);
         api_url.setText(BuildConfig.API_URL);
@@ -87,6 +97,12 @@ public class RnMainActivity extends FragmentActivity implements DefaultHardwareB
             }
         });
 
+//        api_url.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+//            @Override
+//            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+//                return null;
+//            }
+//        });
         mReactInstanceManager =
                 ((MainApplication) getApplication()).getReactNativeHost().getReactInstanceManager();
 

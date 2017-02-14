@@ -1,4 +1,4 @@
-include ':app', ':library', ':tooltip', ':annotation', ':complier', ':lib'
+include ':app', ':library', ':tooltip', ':annotation', ':complier', ':lib', ':javalib'
 //include ':week_sdk'
 
 //include ':RNGL'

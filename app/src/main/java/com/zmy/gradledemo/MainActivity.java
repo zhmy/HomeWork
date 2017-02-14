@@ -2,6 +2,7 @@ package com.zmy.gradledemo;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -28,7 +30,9 @@ import android.widget.TextView;
 import com.zmy.gradledemo.ala.PersonWrapperFragment;
 import com.zmy.gradledemo.ala.PersonInfoActivity;
 import com.zmy.gradledemo.alazan.PeriscopeLayout;
+import com.zmy.gradledemo.anim.AnimActivity;
 import com.zmy.gradledemo.annotation.AnnotationActivity;
+import com.zmy.gradledemo.perform.TestPerformActivity;
 import com.zmy.gradledemo.rn.RnMainActivity;
 import com.zmy.gradledemo.rn.RnTestActivity;
 import com.zmy.gradledemo.tab.TabTestActivity;
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     private TextView api_url;
     private ListView listview;
     String[] strs = new String[]{
-            "RN test", "Annotation test", "Vector Drawable", "Text View", "Tab test"
+            "RN test", "Annotation test", "Vector Drawable", "Text View", "Tab test", "性能", "过渡动画"
     };
 
     private SwipeRefreshLayout swipeLayout;
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,6 +99,12 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 4:
                         clazz = TabTestActivity.class;
+                        break;
+                    case 5:
+                        clazz = TestPerformActivity.class;
+                        break;
+                    case 6:
+                        clazz = AnimActivity.class;
                         break;
                     default:
                         break;

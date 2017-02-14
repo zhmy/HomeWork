@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/annotation" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/complier" />
+            <option value="$PROJECT_DIR$/javalib" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/node_modules/react-native-navigation/android/app" />

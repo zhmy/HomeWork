@@ -80,4 +80,8 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_rn_main2">RnMain2Activity</string>
+    <string name="title_activity_anim">AnimActivity</string>
+
+    <integer name="card_flip_time_full">500</integer>
+    <integer name="card_flip_time_half">250</integer>
 </resources>

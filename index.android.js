@@ -29,6 +29,10 @@ export class ZmyNative extends Component {
     let ZmyNativeModule = NativeModules.ZmyNativeModule;
     ZmyNativeModule.finishActivity('sss');
     }
+
+    startNativeForResult(text) {
+            ZmyNativeModule.startActivityForResult(text, 100, (succ)=>{ToastAndroid.show(succ, ToastAndroid.SHORT)}, (err)=>{console.warn(err)})
+        }
   render() {
     return (
       <View style={styles.container}>
@@ -49,9 +53,12 @@ export class ZmyNative extends Component {
               </ReactToolTipView>
 
               <TouchableOpacity onPress={()=>{
-                                                     this.props.navigator.push({
-                                                   screen: 'ZmyNative',
-                                                 });
+              this.startNativeForResult('com.zmy.gradledemo.rn.RnTestActivity');
+//                                                     this.props.navigator.push({
+//                                                   screen: 'ZmyNative',
+//                                                 });
+
+
                                                       }}>
 
         <Text style={styles.welcome}>
@@ -236,4 +243,4 @@ const styles = StyleSheet.create({
 //AppRegistry.registerComponent('TiebaNext', () => helloList);
 
 Navigation.registerComponent('ZmyNative', () => ZmyNative);
-Navigation.registerComponent('TiebaNext', () => helloList);
+Navigation.registerComponent('helloList', () => helloList);

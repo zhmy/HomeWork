@@ -1,5 +1,6 @@
 package com.zmy.gradledemo.tab;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,14 @@ public class PageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         TextView textView = new TextView(getContext());
         textView.setText("Fragment #" + mPage);
+        if (mPage % 2 == 1) {
+            textView.setBackgroundColor(Color.YELLOW);
+        } else {
+            textView.setBackgroundColor(Color.RED);
+        }
+        if (mPage == 1) {
+            textView.setBackgroundColor(Color.GREEN);
+        }
         return textView;
     }
 }

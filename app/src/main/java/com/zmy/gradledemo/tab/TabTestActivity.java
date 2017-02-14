@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.zmy.gradledemo.R;
+import com.zmy.gradledemo.apidemo.DepthPageTransformer;
+import com.zmy.gradledemo.apidemo.ZoomOutPageTransformer;
 
 /**
  * Created by zmy on 2016/11/11.
@@ -51,12 +53,13 @@ public class TabTestActivity extends AppCompatActivity {
         tab1.setupWithViewPager(viewPager1);
         tab2.setupWithViewPager(viewPager2);
 
-
-
         tab3.setViewPager(viewPager3);
 
         setTabsValue();
 //        tab3.setupWithViewPager(viewPager3);
+        viewPager1.setPageTransformer(true, new ZoomOutPageTransformer());
+        viewPager2.setPageTransformer(true, new DepthPageTransformer());
+
     }
 
     private void setTabsValue() {

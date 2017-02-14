@@ -15,6 +15,13 @@ android {
 //        manifestPlaceholders = [ activityLabel:"defaultName"]
         project.archivesBaseName = "wefan";
         vectorDrawables.useSupportLibrary = true
+
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+        packagingOptions {
+            exclude "lib/arm64-v8a/libgnustl_shared.so"
+        }
     }
     signingConfigs {
         release {
@@ -24,6 +31,7 @@ android {
             keyPassword 'wefan@baidu.com'
         }
     }
+
     buildTypes {
         debug {
             def conf = rootProject.debug
